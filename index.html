@@ -643,10 +643,140 @@ ul { list-style: none; }
 }
 .tech-strip-header .section-tag { margin-bottom: 0; }
 
+/* ===== Scroll Progress Bar ===== */
+#scrollProgress {
+  position: fixed; top: 0; left: 0; z-index: 1001;
+  width: 0; height: 3px;
+  background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+  transition: width 0.1s linear;
+}
+
+/* ===== Page Transition ===== */
+#pageTransition {
+  position: fixed; inset: 0; z-index: 99998;
+  background: var(--bg); pointer-events: none;
+  transform: scaleY(0); transform-origin: bottom;
+  transition: transform 0.6s cubic-bezier(0.77, 0, 0.18, 1);
+}
+#pageTransition.active { transform: scaleY(1); transform-origin: top; }
+
+/* ===== Reveal Stagger ===== */
+.reveal-stagger > * {
+  opacity: 0; transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal-stagger.visible > *:nth-child(1) { transition-delay: 0s; }
+.reveal-stagger.visible > *:nth-child(2) { transition-delay: 0.1s; }
+.reveal-stagger.visible > *:nth-child(3) { transition-delay: 0.2s; }
+.reveal-stagger.visible > *:nth-child(4) { transition-delay: 0.3s; }
+.reveal-stagger.visible > *:nth-child(5) { transition-delay: 0.4s; }
+.reveal-stagger.visible > *:nth-child(6) { transition-delay: 0.5s; }
+.reveal-stagger.visible > * { opacity: 1; transform: translateY(0); }
+.skill-card, .service-card { transition: all var(--transition), transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.skill-card:hover, .service-card:hover, .project-card:hover { transform: translateY(-6px) scale(1.01); }
+
+/* ===== Glow Effects ===== */
+.glow {
+  position: relative;
+}
+.glow::after {
+  content: ''; position: absolute; inset: -2px; border-radius: inherit;
+  background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+  z-index: -1; opacity: 0; filter: blur(15px);
+  transition: opacity 0.4s;
+}
+.glow:hover::after { opacity: 0.5; }
+.btn-primary.glow::after { opacity: 0.3; }
+.btn-primary.glow:hover::after { opacity: 0.6; }
+
+/* ===== Tilt Card ===== */
+.tilt-card { transition: transform 0.2s ease; transform-style: preserve-3d; perspective: 1000px; }
+.tilt-card-inner { transition: transform 0.2s ease; }
+
+/* ===== Button Ripple ===== */
+.ripple {
+  position: relative; overflow: hidden;
+}
+.ripple-effect {
+  position: absolute; border-radius: 50%;
+  background: rgba(255,255,255,0.4);
+  transform: scale(0); animation: ripple-anim 0.6s ease-out;
+  pointer-events: none;
+}
+@keyframes ripple-anim {
+  to { transform: scale(4); opacity: 0; }
+}
+
+/* ===== Typing Cursor ===== */
+#typing-cursor {
+  display: inline-block; width: 3px; height: 1.1em;
+  background: var(--primary); margin-left: 2px;
+  animation: blink-cursor 0.8s step-end infinite;
+  vertical-align: text-bottom;
+}
+@keyframes blink-cursor { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+
+/* ===== Shine Effect on Hover ===== */
+.shine {
+  position: relative; overflow: hidden;
+}
+.shine::before {
+  content: ''; position: absolute; top: 0; left: -75%;
+  width: 50%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+  transform: skewX(-25deg); transition: left 0.6s;
+}
+.shine:hover::before { left: 125%; }
+
+/* ===== Floating Labels on Inputs ===== */
+.form-group.floating { position: relative; }
+.form-group.floating input:focus ~ label,
+.form-group.floating input:not(:placeholder-shown) ~ label,
+.form-group.floating textarea:focus ~ label,
+.form-group.floating textarea:not(:placeholder-shown) ~ label {
+  transform: translateY(-28px) scale(0.85); color: var(--primary);
+}
+
+/* ===== Smooth Image Reveal ===== */
+.img-reveal {
+  position: relative; overflow: hidden;
+}
+.img-reveal img { transform: scale(1.15); transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1); }
+.img-reveal.visible img { transform: scale(1); }
+.img-reveal::after {
+  content: ''; position: absolute; inset: 0; z-index: 2;
+  background: var(--bg); transform: translateX(0);
+  transition: transform 1s cubic-bezier(0.77, 0, 0.18, 1);
+}
+.img-reveal.visible::after { transform: translateX(101%); }
+
+/* ===== Magnetic Hover ===== */
+.magnetic { transition: transform 0.2s ease; }
+
+/* ===== Gradient Border Cards ===== */
+.gradient-border {
+  position: relative; background-clip: padding-box;
+  border: 1px solid transparent;
+}
+.gradient-border::before {
+  content: ''; position: absolute; inset: 0; border-radius: inherit;
+  background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+  z-index: -1; opacity: 0.3; transition: opacity 0.4s;
+  margin: -1px;
+}
+.gradient-border:hover::before { opacity: 0.7; }
+
+/* ===== Scroll-triggered animation classes ===== */
+.reveal-up { opacity: 0; transform: translateY(60px); transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+.reveal-up.visible { opacity: 1; transform: translateY(0); }
+
+
 </style>
 </head>
 <body>
   <div id="loader"><div class="loader-spinner"></div></div>
+  <div id="scrollProgress"></div>
+  <div id="pageTransition"></div>
 
   <div class="cursor cursor-dot" id="cursorDot"></div>
   <div class="cursor cursor-ring" id="cursorRing"></div>
@@ -685,8 +815,8 @@ ul { list-style: none; }
         <h1><span class="gradient-text">UI/UX</span><br>& Web Developer</h1>
         <p>I craft visually stunning designs and build powerful, responsive web experiences that help brands stand out and grow in the digital landscape.</p>
         <div class="hero-buttons">
-          <a href="#graphic-design" class="btn btn-primary"><i class="fas fa-eye"></i> View Portfolio</a>
-          <a href="#contact" class="btn btn-outline"><i class="fas fa-paper-plane"></i> Hire Me</a>
+           <a href="#graphic-design" class="btn btn-primary magnetic"><i class="fas fa-eye"></i> View Portfolio</a>
+    <a href="#contact" class="btn btn-outline magnetic"><i class="fas fa-paper-plane"></i> Hire Me</a>
         </div>
       </div>
       <div class="hero-visual">
@@ -713,12 +843,12 @@ ul { list-style: none; }
     <div class="tech-item"><i class="fab fa-html5"></i> HTML</div>
     <div class="tech-item"><i class="fab fa-css3-alt"></i> CSS</div>
     <div class="tech-item"><i class="fab fa-js"></i> JavaScript</div>
-    <div class="tech-item"><i class="fas fa-server"></i> XAMPP</div>
+  <div class="tech-item"><i class="fas fa-server"></i> XAMPP</div>
     <div class="tech-item"><i class="fab fa-php"></i> PHP</div>
     <div class="tech-item"><i class="fab fa-react"></i> REACT</div>
     <div class="tech-item"><i class="fab fa-figma"></i> Figma</div>
     <div class="tech-item"><i class="fab fa-github"></i> GitHub</div>
-    <div class="tech-item"><i class="fa-solid fa-file-excel"></i> Microsoft Excel</div>
+   <div class="tech-item"><i class="fa-solid fa-file-excel"></i> Microsoft Excel</div>
     <div class="tech-item"><i class="fas fa-paint-brush"></i> Canva</div>
     <div class="tech-item"><i class="fas fa-pen-fancy"></i> Photoshop</div>
     <div class="tech-item"><i class="fas fa-palette"></i> Illustrator</div>
@@ -727,10 +857,10 @@ ul { list-style: none; }
     <div class="tech-item"><i class="fab fa-html5"></i> HTML</div>
     <div class="tech-item"><i class="fab fa-css3-alt"></i> CSS</div>
     <div class="tech-item"><i class="fab fa-js"></i> JavaScript</div>
-  <div class="tech-item"><i class="fas fa-server"></i> XAMPP</div>
+   <div class="tech-item"><i class="fas fa-server"></i> XAMPP</div>
     <div class="tech-item"><i class="fab fa-php"></i> PHP</div>
     <div class="tech-item"><i class="fab fa-react"></i> REACT</div>
-   <div class="tech-item"><i class="fa-solid fa-file-excel"></i> Microsoft Excel</div>
+     <div class="tech-item"><i class="fa-solid fa-file-excel"></i> Microsoft Excel</div>
     <div class="tech-item"><i class="fab fa-figma"></i> Figma</div>
     <div class="tech-item"><i class="fab fa-github"></i> GitHub</div>
 
@@ -758,7 +888,12 @@ ul { list-style: none; }
           <h3>Turning Ideas Into Digital Reality</h3>
           <p>I'm a passionate Graphic Designer and Web Developer with over 2 years of experience creating beautiful, functional digital products. I combine creative design with clean code to deliver exceptional user experiences.</p>
           <p>My approach is simple: understand your vision, apply strategic thinking, and execute with precision. Every project I take on receives the same dedication to quality and attention to detail.</p>
-        
+          <div class="about-details">
+            <div class="about-detail"><i class="fas fa-user"></i><span><strong>Name:</strong> John Ron Avetria</span></div>
+            <div class="about-detail"><i class="fas fa-envelope"></i><span><strong>Email:</strong> johnronavetria@example.com</span></div>
+            <div class="about-detail"><i class="fas fa-map-marker-alt"></i><span><strong>Location:</strong> Daet, Camarines Norte, Philippines</span></div>
+            <div class="about-detail"><i class="fas fa-clock"></i><span><strong>Availability:</strong> Freelance / Full-time</span></div>
+          </div>
          <a href="Avetria_UpdatedResume (3).pdf" download class="btn btn-primary">
     <i class="fas fa-download"></i> Download Resume
 </a>
@@ -772,37 +907,32 @@ ul { list-style: none; }
       <span class="section-tag reveal">Skills</span>
       <h2 class="section-title reveal">My Expertise</h2>
       <p class="section-subtitle reveal">A comprehensive skill set spanning design and development, ensuring every project is handled with precision and creativity.</p>
-      <div class="skills-grid">
-        <div class="skill-card reveal">
+      <div class="skills-grid reveal-stagger">
+        <div class="skill-card">
           <div class="skill-icon"><i class="fas fa-palette"></i></div>
           <h4>Graphic Design</h4>
           <p>Brand identity, social media graphics, posters, and marketing materials that captivate audiences.</p>
-          <div class="skill-bar"><div class="skill-bar-fill" data-width="92"></div></div>
         </div>
-        <div class="skill-card reveal">
-          <div class="skill-icon"><i class="fas fa-pencil-ruler"></i></div>
-          <h4>UI/UX Design</h4>
-          <p>User-centered interfaces with seamless experiences, from wireframes to high-fidelity prototypes.</p>
-          <div class="skill-bar"><div class="skill-bar-fill" data-width="50"></div></div>
-        </div>
-        <div class="skill-card reveal">
-          <div class="skill-icon"><i class="fas fa-code"></i></div>
-          <h4>Frontend Development</h4>
-          <p>Responsive, pixel-perfect websites built with modern frameworks and clean, maintainable code.</p>
-          <div class="skill-bar"><div class="skill-bar-fill" data-width="70"></div></div>
-        </div>
-        <div class="skill-card reveal">
-          <div class="skill-icon"><i class="fas fa-server"></i></div>
-          <h4>Backend Development</h4>
-          <p>Robust server-side solutions, databases, and APIs that power dynamic web applications.</p>
-          <div class="skill-bar"><div class="skill-bar-fill" data-width="20"></div></div>
-        </div>
-            <div class="skill-card reveal">
-         <div class="skill-icon"><i class="fa-solid fa-file-excel"></i></div>
-          <h4>Microsoft Excel (Advanced)</h4>
-          <p>Proficient in using Microsoft Excel for data analysis, reporting, and visualization.</p>
-          <div class="skill-bar"><div class="skill-bar-fill" data-width="80"></div></div>
-        </div>
+         <div class="skill-card">
+        <div class="skill-icon"><i class="fas fa-pencil-ruler"></i></div>
+        <h4>UI/UX Design</h4>
+        <p>User-centered interfaces with seamless experiences, from wireframes to high-fidelity prototypes.</p>
+      </div>
+       <div class="skill-card">
+        <div class="skill-icon"><i class="fas fa-code"></i></div>
+        <h4>Frontend Development</h4>
+        <p>Responsive, pixel-perfect websites built with modern frameworks and clean, maintainable code.</p>
+      </div>
+       <div class="skill-card">
+        <div class="skill-icon"><i class="fas fa-server"></i></div>
+        <h4>Backend Development</h4>
+        <p>I have a working knowledge of backend development and can handle backend tasks, but I am still developing my expertise in this area.</p>
+      </div>
+       <div class="skill-card">
+        <div class="skill-icon"><i class="fa-solid fa-file-excel"></i></div>
+        <h4>Microsoft Excel (Advanced)</h4>
+        <p>Proficient in using Microsoft Excel for data analysis, reporting, and visualization.</p>
+      </div>
       </div>
     </div>
   </section>
@@ -871,7 +1001,26 @@ ul { list-style: none; }
      <div class="masonry-item reveal" data-category="social">
         <img src="viber_image_2026-05-18_20-37-44-054.jpg" alt="Social Media">
     </div>
+    <div class="masonry-item reveal" data-category="poster">
+        <img src="viber_image_2026-05-04_13-17-40-180.jpg" alt="Poster Design">
 </div>
+    <div class="masonry-item reveal" data-category="poster">
+        <img src="viber_image_2026-05-04_13-17-54-674.jpg" alt="Poster Design">
+    </div>
+    <div class="masonry-item reveal" data-category="poster">
+        <img src="viber_image_2026-05-04_13-18-02-200.jpg" alt="Poster Design">
+    </div>
+    <div class="masonry-item reveal" data-category="poster">
+        <img src="viber_image_2026-03-31_10-44-56-018.jpg" alt="Poster Design">
+    </div>
+    <div class="masonry-item reveal" data-category="social">
+        <img src="viber_image_2026-03-31_10-44-56-702.jpg" alt="Social Media ">
+    </div>
+     <div class="masonry-item reveal" data-category="social">
+        <img src="viber_image_2026-03-31_10-44-56-018.jpg" alt="Social Media ">
+    </div>
+    <div class="masonry-item reveal" data-category="social">
+        <img src="viber_image_2026-03-31_10-44-57-310.jpg" alt="Social Media ">
     </div>
   </section>
 
@@ -881,35 +1030,34 @@ ul { list-style: none; }
       <h2 class="section-title reveal">Web Development</h2>
       <p class="section-subtitle reveal">Responsive, modern websites built with clean code and optimized for performance.</p>
       <div class="project-grid">
-        <div class="project-card reveal">
+        <div class="project-card reveal tilt-card">
           <div class="mockup">
             <div class="mockup-bar"><span></span><span></span><span></span></div>
-            <div class="mockup-screen" style="background:linear-gradient(135deg,#667eea20,#764ba220);color:var(--text-muted)"><i class="fas fa-globe"></i></div>
+          <img src="Screenshot 2026-06-02 103731.png" alt="Client Portfolio Web" style="width:100%;height:100%;object-fit:cover;border-radius:0 0 8px 8px">
           </div>
-          
           <div class="project-info">
             <h4>Client Portfolio Web</h4>
             <p>A full-featured online store with cart, checkout, and admin dashboard.</p>
             <div class="project-tech"><span>HTML</span><span>CSS</span><span>JavaScript</span></div>
             <div class="project-links">
-    <a href="https://john-ron.github.io/Client_Portfolio/" target="_blank" class="live">
+    <a href="https://john-ron.github.io/Client_Portfolio/" target="_blank" class="live magnetic">
         <i class="fas fa-external-link-alt"></i> Live Demo
     </a>
 </div>
           </div>
         </div>
 
-        <div class="project-card reveal">
+        <div class="project-card reveal tilt-card">
           <div class="mockup">
             <div class="mockup-bar"><span></span><span></span><span></span></div>
-            <div class="mockup-screen" style="background:linear-gradient(135deg,#f093fb20,#f5576c20);color:var(--text-muted)"><i class="fas fa-calendar-alt"></i></div>
+            <img src="Screenshot 2026-06-19 134113.png" alt="Client Gender Reveal" style="width:100%;height:100%;object-fit:cover;border-radius:0 0 8px 8px">
           </div>
           <div class="project-info">
             <h4>Client Gender Reveal</h4>
             <p>A collaborative project management tool with real-time updates and team features.</p>
             <div class="project-tech"><span>HTML</span><span>CSS</span><span>JavaScript</span></div>
             <div class="project-links">
-                <a href=" https://john-ron.github.io/Gender_Reveal/" target="_blank" class="live">
+                <a href=" https://john-ron.github.io/Gender_Reveal/" target="_blank" class="live magnetic">
              <i class="fas fa-external-link-alt"></i> Live Demo
     </a>
       
@@ -926,33 +1074,33 @@ ul { list-style: none; }
       <span class="section-tag reveal">What I Do</span>
       <h2 class="section-title reveal">Services</h2>
       <p class="section-subtitle reveal">From concept to launch, I offer end-to-end design and development services tailored to your needs.</p>
-      <div class="services-grid">
-        <div class="service-card reveal">
+      <div class="services-grid reveal-stagger">
+        <div class="service-card">
           <div class="service-icon"><i class="fas fa-paint-brush"></i></div>
           <h4>Graphic Design</h4>
           <p>Logo design, branding, social media graphics, posters, and marketing collateral that make your brand unforgettable.</p>
         </div>
-        <div class="service-card reveal">
+        <div class="service-card">
           <div class="service-icon"><i class="fas fa-code"></i></div>
           <h4>Web Development</h4>
           <p>Custom websites, web applications, and e-commerce solutions built with modern technologies and best practices.</p>
         </div>
-        <div class="service-card reveal">
+        <div class="service-card">
           <div class="service-icon"><i class="fas fa-pencil-ruler"></i></div>
           <h4>UI/UX Design</h4>
           <p>User research, wireframing, prototyping, and interface design that deliver intuitive user experiences.</p>
         </div>
-        <div class="service-card reveal">
+        <div class="service-card">
           <div class="service-icon"><i class="fas fa-mobile-alt"></i></div>
           <h4>Web Design</h4>
           <p>Responsive, mobile-first website designs that look stunning on every device and drive conversions.</p>
         </div>
-        <div class="service-card reveal">
+        <div class="service-card">
           <div class="service-icon"><i class="fas fa-bullhorn"></i></div>
           <h4>Branding</h4>
           <p>Complete brand identity packages including logos, color palettes, typography, and brand guidelines.</p>
         </div>
-        <div class="service-card reveal">
+        <div class="service-card">
           <div class="service-icon"><i class="fas fa-chart-line"></i></div>
           <h4>Digital Marketing</h4>
           <p>Social media graphics, email templates, and digital ads designed to engage and convert your audience.</p>
@@ -972,10 +1120,10 @@ ul { list-style: none; }
             <div class="testimonial-card-inner">
               <div class="quote">"</div>
               <div class="testimonial-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-              <p class="testimonial-text">"John Ron is an exceptional designer and developer. He transformed my porfolio website into a modern, high-performing platform. Our traffic and conversions increased significantly. Highly recommend!"</p>
+              <p class="testimonial-text">"Alex is an exceptional designer and developer. He transformed our outdated website into a modern, high-performing platform. Our traffic and conversions increased significantly. Highly recommend!"</p>
               <div class="testimonial-author">
-                <div class="testimonial-avatar">JA</div>
-                <div><div class="testimonial-name">Joyce Abando</div><div class="testimonial-role">CPA</div></div>
+                <div class="testimonial-avatar">SM</div>
+                <div><div class="testimonial-name">Sarah Mitchell</div><div class="testimonial-role">CEO, BrightMedia</div></div>
               </div>
             </div>
           </div>
@@ -983,14 +1131,24 @@ ul { list-style: none; }
             <div class="testimonial-card-inner">
               <div class="quote">"</div>
               <div class="testimonial-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-              <p class="testimonial-text">"Working with John Ron was a fantastic experience. He understood our Gender Reveal website vision perfectly and delivered a stunning design that exceeded our expectations. Professional, creative, and reliable."</p>
+              <p class="testimonial-text">"Working with Alex was a fantastic experience. He understood our brand vision perfectly and delivered a stunning design that exceeded our expectations. Professional, creative, and reliable."</p>
               <div class="testimonial-author">
-                <div class="testimonial-avatar">JT</div>
-                <div><div class="testimonial-name">James Tacalan</div><div class="testimonial-role">Staff</div></div>
+                <div class="testimonial-avatar">JD</div>
+                <div><div class="testimonial-name">James Davidson</div><div class="testimonial-role">Founder, TechStart</div></div>
               </div>
             </div>
           </div>
-          
+          <div class="testimonial-card">
+            <div class="testimonial-card-inner">
+              <div class="quote">"</div>
+              <div class="testimonial-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+              <p class="testimonial-text">"The branding package Alex created for us was world-class. From the logo to the social media templates, everything was cohesive and beautifully designed. A true talent in both design and development."</p>
+              <div class="testimonial-author">
+                <div class="testimonial-avatar">ER</div>
+                <div><div class="testimonial-name">Emily Roberts</div><div class="testimonial-role">Marketing Director, NovaCorp</div></div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div class="testimonials-controls" id="testimonialsControls"></div>
@@ -1019,38 +1177,68 @@ ul { list-style: none; }
             </div>
           </div>
        <div class="contact-socials">
-  
-  <a href="https://www.linkedin.com/in/your-username" target="_blank" aria-label="LinkedIn">
-    <i class="fab fa-linkedin-in"></i>
-  </a>
-  
-  <a href="https://www.instagram.com/_https.ron24?igsh=MTlzN3E3cjI1MDVtYg==" target="_blank" aria-label="Instagram">
-    <i class="fab fa-instagram"></i>
-  </a>
-
-  <a href="https://github.com/John-Ron" target="_blank" aria-label="GitHub">
-    <i class="fab fa-github"></i>
-  </a>
-
-  <a href="https://www.facebook.com/share/1BfKKtAffV/" target="_blank" aria-label="Facebook">
-    <i class="fab fa-facebook-f"></i>
-  </a>
-
-  <a href="http://t.me/h17273728" target="_blank" aria-label="Telegram">
-    <i class="fab fa-telegram-plane"></i>
-  </a>
-
+  <a href="https://www.linkedin.com/in/your-username" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+  <a href="https://www.instagram.com/_https.ron24?igsh=MTlzN3E3cjI1MDVtYg==" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+  <a href="https://github.com/John-Ron" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+  <a href="https://www.facebook.com/share/1BfKKtAffV/" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+  <a href="http://t.me/h17273728" target="_blank" aria-label="Telegram"><i class="fab fa-telegram-plane"></i></a>
 </div>
-       
- 
+      </div>
+      <div class="contact-form reveal-right">
+        <form id="contactForm">
+          <div class="form-group floating">
+            <input type="text" id="name" placeholder=" " required>
+            <label for="name">Your Name</label>
+          </div>
+          <div class="form-group floating">
+            <input type="email" id="email" placeholder=" " required>
+            <label for="email">Your Email</label>
+          </div>
+          <div class="form-group floating">
+            <input type="text" id="subject" placeholder=" ">
+            <label for="subject">Subject</label>
+          </div>
+          <div class="form-group floating">
+            <textarea id="message" placeholder=" " required></textarea>
+            <label for="message">Your Message</label>
+          </div>
+          <button type="submit" class="btn btn-primary glow ripple" style="width:100%;justify-content:center"><i class="fas fa-paper-plane"></i> Send Message</button>
+        </form>
+      </div>
       </div>
     </div>
   </section>
 
- 
-      
+   <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3>JOHN RON AVETRIA</h3>
+          <p>Turning ideas into digital reality through creative design and clean code.</p>
         </div>
-      </div>
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <a href="#hero">Home</a>
+          <a href="#about">About</a>
+          <a href="#skills">Skills</a>
+          <a href="#graphic-design">Design</a>
+          <a href="#web-dev">Web Dev</a>
+          <a href="#contact">Contact</a>
+        </div>
+        <div class="footer-col">
+          <h4>Services</h4>
+          <a href="#services">Graphic Design</a>
+          <a href="#services">Web Development</a>
+          <a href="#services">UI/UX Design</a>
+          <a href="#services">Branding</a>
+        </div>
+        <div class="footer-col">
+          <h4>Connect</h4>
+          <a href="#"><i class="fab fa-github"></i> GitHub</a>
+          <a href="#"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
+          <a href="#"><i class="fab fa-facebook-f"></i> Facebook</a>
+          <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+        </div>
       <div class="footer-bottom">
         <span>&copy; 2026 John Ron Avetria. All rights reserved.</span>
         <span>Designed & Developed with <i class="fas fa-heart" style="color:var(--primary)"></i></span>
@@ -1408,6 +1596,92 @@ document.addEventListener('keydown', (e) => {
 });
 document.addEventListener('mousedown', () => {
   document.body.classList.remove('keyboard-nav');
+});
+
+// ===== Scroll Progress Bar =====
+const scrollProgress = document.getElementById('scrollProgress');
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = (scrollTop / docHeight) * 100;
+  scrollProgress.style.width = progress + '%';
+});
+
+// ===== Ripple Effect on Buttons =====
+document.querySelectorAll('.ripple').forEach(btn => {
+  btn.addEventListener('click', function(e) {
+    const rect = this.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    const x = e.clientX - rect.left - size / 2;
+    const y = e.clientY - rect.top - size / 2;
+    const ripple = document.createElement('span');
+    ripple.className = 'ripple-effect';
+    ripple.style.width = ripple.style.height = size + 'px';
+    ripple.style.left = x + 'px';
+    ripple.style.top = y + 'px';
+    this.appendChild(ripple);
+    setTimeout(() => ripple.remove(), 600);
+  });
+});
+
+// ===== Magnetic Hover Effect =====
+document.querySelectorAll('.magnetic').forEach(el => {
+  el.addEventListener('mousemove', function(e) {
+    const rect = this.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    this.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+  });
+  el.addEventListener('mouseleave', function() {
+    this.style.transform = 'translate(0, 0)';
+  });
+});
+
+// ===== 3D Tilt Effect on Cards =====
+document.querySelectorAll('.tilt-card').forEach(card => {
+  card.addEventListener('mousemove', function(e) {
+    const rect = this.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const rotateX = (y - centerY) / centerY * -8;
+    const rotateY = (x - centerX) / centerX * 8;
+    this.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02,1.02,1.02)`;
+  });
+  card.addEventListener('mouseleave', function() {
+    this.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1,1,1)';
+  });
+});
+
+// ===== Enhanced Lightbox - show actual image =====
+document.querySelectorAll('.masonry-item img').forEach(img => {
+  img.addEventListener('click', function(e) {
+    e.stopPropagation();
+    const src = this.getAttribute('src');
+    lightboxImg.src = src;
+    lightbox.classList.add('open');
+  });
+});
+
+// ===== Reveal Stagger =====
+document.querySelectorAll('.reveal-stagger').forEach(el => {
+  revealObserver.observe(el);
+});
+
+// ===== Image Reveal =====
+document.querySelectorAll('.img-reveal').forEach(el => {
+  revealObserver.observe(el);
+});
+
+// ===== Slide-in on scroll for reveal-up =====
+document.querySelectorAll('.reveal-up').forEach(el => {
+  revealObserver.observe(el);
+});
+
+// ===== Shine effect on cards =====
+document.querySelectorAll('.project-card, .service-card, .skill-card').forEach(card => {
+  card.classList.add('shine');
 });
 </script>
 </body>
