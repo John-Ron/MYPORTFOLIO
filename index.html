@@ -330,23 +330,75 @@ ul { list-style: none; }
   background: var(--primary); color: #fff; border-color: var(--primary);
 }
 
-/* Masonry */
-.masonry { columns: 3; column-gap: 20px; }
-.masonry-item {
-  break-inside: avoid; margin-bottom: 20px; position: relative;
-  border-radius: var(--radius); overflow: hidden; cursor: pointer;
-  transition: all var(--transition);
+/* Design Slider */
+.design-slider {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: var(--bg-alt);
 }
-.masonry-item img { width: 100%; display: block; transition: transform 0.6s; }
-.masonry-item:hover img { transform: scale(1.08); }
-.masonry-overlay {
-  position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
-  display: flex; flex-direction: column; justify-content: flex-end; padding: 24px;
-  opacity: 0; transition: opacity 0.4s;
+.slider-track {
+  display: flex;
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
-.masonry-item:hover .masonry-overlay { opacity: 1; }
-.masonry-overlay h4 { color: #fff; font-family: var(--font-display); font-size: 1.05rem; }
-.masonry-overlay span { color: rgba(255,255,255,0.7); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; }
+.slider-track .masonry-item {
+  flex: 0 0 100%;
+  min-width: 0;
+  margin-bottom: 0;
+  border-radius: 0;
+  cursor: pointer;
+}
+.slider-track .masonry-item img {
+  width: 100%;
+  height: 520px;
+  object-fit: contain;
+  background: var(--bg-alt);
+  display: block;
+  transition: transform 0.6s;
+}
+.slider-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.9);
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: all 0.3s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  color: #333;
+}
+.slider-btn:hover { background: #fff; transform: translateY(-50%) scale(1.1); }
+.slider-btn.prev { left: 16px; }
+.slider-btn.next { right: 16px; }
+.slider-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+.slider-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--border);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s;
+  padding: 0;
+}
+.slider-dot.active { background: var(--primary); transform: scale(1.3); }
+@media (max-width: 768px) {
+  .slider-track .masonry-item img { height: 320px; }
+}
 
 /* Web Dev Portfolio Grid */
 .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 32px; }
@@ -565,7 +617,7 @@ ul { list-style: none; }
   .about-details { grid-template-columns: 1fr; }
   .contact-grid { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr 1fr; }
-  .masonry { columns: 2; }
+  .slider-track .masonry-item img { height: 400px; }
 }
 @media (max-width: 768px) {
   .navbar.scrolled { background: rgba(255,255,255,0.95); }
@@ -583,7 +635,7 @@ ul { list-style: none; }
   .hero-profile-frame { width: 220px; height: 220px; }
   .hero-stats { gap: 24px; }
   .hero-stat h3 { font-size: 1.4rem; }
-  .masonry { columns: 1; }
+  .slider-track .masonry-item img { height: 320px; }
   .project-grid { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr; }
   .services-grid { grid-template-columns: 1fr; }
@@ -952,7 +1004,8 @@ ul { list-style: none; }
     
 
       </div>
-     <div class="masonry" id="designMasonry">
+     <div class="design-slider" id="designSlider">
+    <div class="slider-track" id="sliderTrack">
 
     <div class="masonry-item reveal" data-category="poster">
     <img src="viber_image_2026-05-18_07-44-02-837.jpg" alt="Poster Design">
@@ -1022,6 +1075,11 @@ ul { list-style: none; }
     <div class="masonry-item reveal" data-category="social">
         <img src="viber_image_2026-03-31_10-44-57-310.jpg" alt="Social Media ">
     </div>
+    </div>
+    <button class="slider-btn prev" id="sliderPrev">&#10094;</button>
+    <button class="slider-btn next" id="sliderNext">&#10095;</button>
+  </div>
+  <div class="slider-dots" id="sliderDots"></div>
   </section>
 
   <section class="section section-alt" id="web-dev">
@@ -1109,7 +1167,7 @@ ul { list-style: none; }
     </div>
   </section>
 
-  <section class="section section-alt" id="testimonials">
+    <section class="section section-alt" id="testimonials">
     <div class="container">
       <span class="section-tag reveal">Testimonials</span>
       <h2 class="section-title reveal">What Clients Say</h2>
@@ -1489,35 +1547,95 @@ window.addEventListener('scroll', () => {
 });
 backToTop.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
 
-// ===== Masonry Filter =====
+// ===== Design Slider =====
+const sliderTrack = document.getElementById('sliderTrack');
+const sliderPrev = document.getElementById('sliderPrev');
+const sliderNext = document.getElementById('sliderNext');
+const sliderDots = document.getElementById('sliderDots');
 const designFilters = document.getElementById('designFilters');
-const designItems = document.querySelectorAll('#designMasonry .masonry-item');
-designFilters.addEventListener('click', (e) => {
-  if (e.target.tagName !== 'BUTTON') return;
-  designFilters.querySelectorAll('button').forEach(b => b.classList.remove('active'));
-  e.target.classList.add('active');
-  const filter = e.target.dataset.filter;
-  designItems.forEach(item => {
+let currentSlide = 0;
+let visibleItems = [];
+
+function getVisibleItems() {
+  const activeBtn = designFilters.querySelector('.active');
+  const filter = activeBtn ? activeBtn.dataset.filter : 'all';
+  const allItems = Array.from(sliderTrack.querySelectorAll('.masonry-item'));
+  allItems.forEach(item => {
     if (filter === 'all' || item.dataset.category === filter) {
       item.style.display = 'block';
     } else {
       item.style.display = 'none';
     }
   });
+  return allItems.filter(item => item.style.display !== 'none');
+}
+
+function updateSlider() {
+  visibleItems = getVisibleItems();
+  const total = visibleItems.length;
+  if (total === 0) return;
+  if (currentSlide >= total) currentSlide = 0;
+  const offset = -currentSlide * 100;
+  sliderTrack.style.transform = 'translateX(' + offset + '%)';
+  sliderDots.innerHTML = '';
+  for (let i = 0; i < total; i++) {
+    const dot = document.createElement('button');
+    dot.className = 'slider-dot' + (i === currentSlide ? ' active' : '');
+    dot.addEventListener('click', function() { currentSlide = i; updateSlider(); });
+    sliderDots.appendChild(dot);
+  }
+}
+
+let slideInterval;
+
+function startAutoSlide() {
+  stopAutoSlide();
+  slideInterval = setInterval(function() {
+    if (visibleItems.length === 0) return;
+    currentSlide = (currentSlide + 1) % visibleItems.length;
+    updateSlider();
+  }, 3000);
+}
+
+function stopAutoSlide() {
+  clearInterval(slideInterval);
+}
+
+sliderPrev.addEventListener('click', function() {
+  if (visibleItems.length === 0) return;
+  currentSlide = (currentSlide - 1 + visibleItems.length) % visibleItems.length;
+  updateSlider();
+  startAutoSlide();
 });
+
+sliderNext.addEventListener('click', function() {
+  if (visibleItems.length === 0) return;
+  currentSlide = (currentSlide + 1) % visibleItems.length;
+  updateSlider();
+  startAutoSlide();
+});
+
+sliderDots.addEventListener('click', function() {
+  startAutoSlide();
+});
+
+designFilters.addEventListener('click', function(e) {
+  if (e.target.tagName !== 'BUTTON') return;
+  designFilters.querySelectorAll('button').forEach(function(b) { b.classList.remove('active'); });
+  e.target.classList.add('active');
+  currentSlide = 0;
+  updateSlider();
+  startAutoSlide();
+});
+
+// Init
+updateSlider();
+startAutoSlide();
 
 // ===== Lightbox =====
 const lightbox = document.getElementById('lightbox');
 const lightboxImg = document.getElementById('lightboxImg');
 const lightboxClose = document.getElementById('lightboxClose');
-document.querySelectorAll('.masonry-item').forEach(item => {
-  item.addEventListener('click', () => {
-    const bg = item.style.background;
-    // Create a canvas to simulate image from gradient
-    lightboxImg.src = ''; // not a real image, just show placeholder
-    lightbox.classList.add('open');
-  });
-});
 lightboxClose.addEventListener('click', () => lightbox.classList.remove('open'));
 lightbox.addEventListener('click', (e) => { if (e.target === lightbox) lightbox.classList.remove('open'); });
 document.addEventListener('keydown', (e) => { if (e.key === 'Escape') lightbox.classList.remove('open'); });
@@ -1526,8 +1644,8 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') lightbox.c
 const track = document.getElementById('testimonialsTrack');
 const cards = track.querySelectorAll('.testimonial-card');
 const controls = document.getElementById('testimonialsControls');
-let currentSlide = 0;
-let slideInterval;
+let testimonialSlide = 0;
+let testimonialSlideInterval;
 
 cards.forEach((_, i) => {
   const dot = document.createElement('button');
@@ -1537,28 +1655,28 @@ cards.forEach((_, i) => {
 });
 
 function goToSlide(index) {
-  currentSlide = index;
-  track.style.transform = `translateX(-${currentSlide * 100}%)`;
+  testimonialSlide = index;
+  track.style.transform = `translateX(-${testimonialSlide * 100}%)`;
   controls.querySelectorAll('.testimonials-dot').forEach((d, i) => {
-    d.classList.toggle('active', i === currentSlide);
+    d.classList.toggle('active', i === testimonialSlide);
   });
 }
 
 controls.addEventListener('click', (e) => {
   if (e.target.classList.contains('testimonials-dot')) {
     goToSlide(parseInt(e.target.dataset.index));
-    resetAutoSlide();
+    resetTestimonialsAutoSlide();
   }
 });
 
 let startX = 0, isDragging = false;
 track.addEventListener('mousedown', (e) => { startX = e.clientX; isDragging = true; track.style.cursor = 'grabbing'; });
-track.addEventListener('mousemove', (e) => { if (isDragging) { const diff = startX - e.clientX; if (Math.abs(diff) > 50) { goToSlide(Math.min(Math.max(currentSlide + (diff > 0 ? 1 : -1), 0), cards.length - 1)); isDragging = false; resetAutoSlide(); } } });
+track.addEventListener('mousemove', (e) => { if (isDragging) { const diff = startX - e.clientX; if (Math.abs(diff) > 50) { goToSlide(Math.min(Math.max(testimonialSlide + (diff > 0 ? 1 : -1), 0), cards.length - 1)); isDragging = false; resetTestimonialsAutoSlide(); } } });
 document.addEventListener('mouseup', () => { isDragging = false; track.style.cursor = 'grab'; });
 
-function startAutoSlide() { slideInterval = setInterval(() => { goToSlide((currentSlide + 1) % cards.length); }, 5000); }
-function resetAutoSlide() { clearInterval(slideInterval); startAutoSlide(); }
-startAutoSlide();
+function startTestimonialsAutoSlide() { testimonialSlideInterval = setInterval(() => { goToSlide((testimonialSlide + 1) % cards.length); }, 5000); }
+function resetTestimonialsAutoSlide() { clearInterval(testimonialSlideInterval); startTestimonialsAutoSlide(); }
+startTestimonialsAutoSlide();
 
 // ===== Contact Form =====
 document.getElementById('contactForm').addEventListener('submit', function(e) {
@@ -1655,7 +1773,7 @@ document.querySelectorAll('.tilt-card').forEach(card => {
 });
 
 // ===== Enhanced Lightbox - show actual image =====
-document.querySelectorAll('.masonry-item img').forEach(img => {
+document.querySelectorAll('#sliderTrack .masonry-item img').forEach(img => {
   img.addEventListener('click', function(e) {
     e.stopPropagation();
     const src = this.getAttribute('src');
