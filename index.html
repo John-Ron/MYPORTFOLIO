@@ -336,10 +336,11 @@ ul { list-style: none; }
   overflow: hidden;
   border-radius: var(--radius);
   background: var(--bg-alt);
+  box-shadow: 0 4px 30px rgba(0,0,0,0.08);
 }
 .slider-track {
   display: flex;
-  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: transform 0.7s cubic-bezier(0.65, 0, 0.35, 1);
 }
 .slider-track .masonry-item {
   flex: 0 0 100%;
@@ -347,6 +348,7 @@ ul { list-style: none; }
   margin-bottom: 0;
   border-radius: 0;
   cursor: pointer;
+  position: relative;
 }
 .slider-track .masonry-item img {
   width: 100%;
@@ -354,50 +356,146 @@ ul { list-style: none; }
   object-fit: contain;
   background: var(--bg-alt);
   display: block;
-  transition: transform 0.6s;
+  transform: scale(0.95);
+  opacity: 0.6;
+  transition: transform 0.7s cubic-bezier(0.65, 0, 0.35, 1), opacity 0.7s ease;
+  filter: blur(2px) grayscale(0.3);
+}
+.slider-track .masonry-item.active img {
+  transform: scale(1);
+  opacity: 1;
+  filter: blur(0) grayscale(0);
+}
+.slider-track .masonry-item::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, transparent 50%, rgba(0,0,0,0.03));
+  pointer-events: none;
 }
 .slider-btn {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 44px;
-  height: 44px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
-  background: rgba(255,255,255,0.9);
+  background: rgba(255,255,255,0.95);
   border: none;
   cursor: pointer;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 10;
-  transition: all 0.3s;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
   color: #333;
+  opacity: 0;
+  backdrop-filter: blur(4px);
 }
-.slider-btn:hover { background: #fff; transform: translateY(-50%) scale(1.1); }
-.slider-btn.prev { left: 16px; }
-.slider-btn.next { right: 16px; }
+.design-slider:hover .slider-btn { opacity: 1; }
+.slider-btn:hover {
+  background: #fff;
+  transform: translateY(-50%) scale(1.15);
+  box-shadow: 0 6px 24px rgba(0,0,0,0.18);
+}
+.slider-btn.prev { left: 20px; }
+.slider-btn.next { right: 20px; }
+
+/* Progress Bar */
+.slider-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: rgba(0,0,0,0.06);
+  z-index: 10;
+}
+.slider-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--primary-light, #7c3aed));
+  width: 0%;
+  transition: width 0.1s linear;
+  border-radius: 0 2px 2px 0;
+}
+
+/* Dots */
 .slider-dots {
   display: flex;
   justify-content: center;
-  gap: 8px;
-  margin-top: 16px;
+  gap: 10px;
+  margin-top: 20px;
   flex-wrap: wrap;
 }
 .slider-dot {
-  width: 10px;
-  height: 10px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
   background: var(--border);
-  border: none;
+  border: 2px solid transparent;
   cursor: pointer;
-  transition: all 0.3s;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   padding: 0;
+  position: relative;
 }
-.slider-dot.active { background: var(--primary); transform: scale(1.3); }
+.slider-dot:hover { background: var(--text-muted); transform: scale(1.2); }
+.slider-dot.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  transform: scale(1.15);
+  box-shadow: 0 0 12px rgba(99,102,241,0.35);
+}
+
+/* Slide Counter */
+.slider-counter {
+  position: absolute;
+  bottom: 16px;
+  right: 20px;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(6px);
+  color: #fff;
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-family: var(--font-mono, monospace);
+  letter-spacing: 0.5px;
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.design-slider:hover .slider-counter { opacity: 1; }
+
+/* Slide Caption */
+.slider-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 40px 24px 20px;
+  background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
+  color: #fff;
+  z-index: 5;
+  transform: translateY(100%);
+  transition: transform 0.5s cubic-bezier(0.65, 0, 0.35, 1);
+}
+.slider-track .masonry-item.active .slider-caption { transform: translateY(0); }
+.slider-caption h4 { font-size: 1.1rem; margin: 0; font-family: var(--font-display); }
+.slider-caption span { font-size: 0.8rem; opacity: 0.8; text-transform: uppercase; letter-spacing: 1px; }
+
+@media (max-width: 1024px) {
+  .slider-track .masonry-item img { height: 400px; }
+  .slider-btn { opacity: 1; width: 40px; height: 40px; font-size: 1.1rem; }
+  .slider-btn.prev { left: 12px; }
+  .slider-btn.next { right: 12px; }
+}
 @media (max-width: 768px) {
   .slider-track .masonry-item img { height: 320px; }
+  .slider-btn { width: 36px; height: 36px; font-size: 1rem; }
+  .slider-btn.prev { left: 8px; }
+  .slider-btn.next { right: 8px; }
+  .slider-counter { opacity: 1; font-size: 0.7rem; bottom: 12px; right: 12px; }
 }
 
 /* Web Dev Portfolio Grid */
@@ -905,6 +1003,10 @@ ul { list-style: none; }
     <div class="tech-item"><i class="fas fa-pen-fancy"></i> Photoshop</div>
     <div class="tech-item"><i class="fas fa-palette"></i> Illustrator</div>
     <div class="tech-item"><i class="fas fa-layer-group"></i> CapCut</div>
+    <div class="tech-item"><i class="fab fa-shopify"></i> Shopify</div>
+    <div class="tech-item"><i class="fab fa-wordpress"></i> WordPress</div>
+    <div class="tech-item"><i class="fas fa-database"></i> MySQL</div>
+    <div class="tech-item"><i class="fas fa-robot"></i> Claude</div>
     <!-- Duplicate for seamless scroll -->
     <div class="tech-item"><i class="fab fa-html5"></i> HTML</div>
     <div class="tech-item"><i class="fab fa-css3-alt"></i> CSS</div>
@@ -920,6 +1022,10 @@ ul { list-style: none; }
     <div class="tech-item"><i class="fas fa-pen-fancy"></i> Photoshop</div>
     <div class="tech-item"><i class="fas fa-palette"></i> Illustrator</div>
     <div class="tech-item"><i class="fas fa-layer-group"></i> CapCut</div>
+    <div class="tech-item"><i class="fab fa-shopify"></i> Shopify</div>
+    <div class="tech-item"><i class="fab fa-wordpress"></i> WordPress</div>
+    <div class="tech-item"><i class="fas fa-database"></i> MySQL</div>
+    <div class="tech-item"><i class="fas fa-robot"></i> Claude</div>
   </div>
 </div>
 
@@ -942,7 +1048,7 @@ ul { list-style: none; }
           <p>My approach is simple: understand your vision, apply strategic thinking, and execute with precision. Every project I take on receives the same dedication to quality and attention to detail.</p>
           <div class="about-details">
             <div class="about-detail"><i class="fas fa-user"></i><span><strong>Name:</strong> John Ron Avetria</span></div>
-            <div class="about-detail"><i class="fas fa-envelope"></i><span><strong>Email:</strong> johnronavetria@gmail.com</span></div>
+            <div class="about-detail"><i class="fas fa-envelope"></i><span><strong>Email:</strong> johnronavetria@example.com</span></div>
             <div class="about-detail"><i class="fas fa-map-marker-alt"></i><span><strong>Location:</strong> Daet, Camarines Norte, Philippines</span></div>
             <div class="about-detail"><i class="fas fa-clock"></i><span><strong>Availability:</strong> Freelance / Full-time</span></div>
           </div>
@@ -1078,6 +1184,8 @@ ul { list-style: none; }
     </div>
     <button class="slider-btn prev" id="sliderPrev">&#10094;</button>
     <button class="slider-btn next" id="sliderNext">&#10095;</button>
+    <div class="slider-progress"><div class="slider-progress-bar" id="sliderProgressBar"></div></div>
+    <div class="slider-counter" id="sliderCounter">1 / 1</div>
   </div>
   <div class="slider-dots" id="sliderDots"></div>
   </section>
@@ -1553,8 +1661,12 @@ const sliderPrev = document.getElementById('sliderPrev');
 const sliderNext = document.getElementById('sliderNext');
 const sliderDots = document.getElementById('sliderDots');
 const designFilters = document.getElementById('designFilters');
+const sliderProgressBar = document.getElementById('sliderProgressBar');
+const sliderCounter = document.getElementById('sliderCounter');
 let currentSlide = 0;
 let visibleItems = [];
+let slideInterval;
+let progressInterval;
 
 function getVisibleItems() {
   const activeBtn = designFilters.querySelector('.active');
@@ -1575,30 +1687,53 @@ function updateSlider() {
   const total = visibleItems.length;
   if (total === 0) return;
   if (currentSlide >= total) currentSlide = 0;
+
   const offset = -currentSlide * 100;
   sliderTrack.style.transform = 'translateX(' + offset + '%)';
+
+  // Active class for animation
+  sliderTrack.querySelectorAll('.masonry-item').forEach(function(item, i) {
+    item.classList.toggle('active', item.style.display !== 'none' && i === currentSlide);
+  });
+
+  // Dots
   sliderDots.innerHTML = '';
   for (let i = 0; i < total; i++) {
     const dot = document.createElement('button');
     dot.className = 'slider-dot' + (i === currentSlide ? ' active' : '');
-    dot.addEventListener('click', function() { currentSlide = i; updateSlider(); });
+    dot.addEventListener('click', function() { currentSlide = i; updateSlider(); startAutoSlide(); });
     sliderDots.appendChild(dot);
   }
+
+  // Counter
+  sliderCounter.textContent = (currentSlide + 1) + ' / ' + total;
 }
 
-let slideInterval;
+function resetProgressBar() {
+  sliderProgressBar.style.width = '0%';
+  sliderProgressBar.style.transition = 'none';
+  // Force reflow
+  void sliderProgressBar.offsetWidth;
+  sliderProgressBar.style.transition = 'width 3s linear';
+  sliderProgressBar.style.width = '100%';
+}
 
 function startAutoSlide() {
   stopAutoSlide();
+  resetProgressBar();
   slideInterval = setInterval(function() {
     if (visibleItems.length === 0) return;
     currentSlide = (currentSlide + 1) % visibleItems.length;
     updateSlider();
+    resetProgressBar();
   }, 3000);
 }
 
 function stopAutoSlide() {
   clearInterval(slideInterval);
+  clearInterval(progressInterval);
+  sliderProgressBar.style.transition = 'none';
+  sliderProgressBar.style.width = '0%';
 }
 
 sliderPrev.addEventListener('click', function() {
