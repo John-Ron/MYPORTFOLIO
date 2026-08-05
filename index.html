@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 :root {
@@ -69,7 +70,12 @@ img { max-width: 100%; display: block; }
 ul { list-style: none; }
 .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
 .section { padding: var(--section-padding); position: relative; }
-.section-alt { background: var(--bg-alt); }
+.section-alt { background: rgba(248, 250, 252, 0.82); }
+[data-theme="dark"] .section-alt { background: rgba(17, 24, 39, 0.82); }
+#bg3d {
+  position: fixed; inset: 0; width: 100%; height: 100%;
+  z-index: -1; pointer-events: none; opacity: 0.8;
+}
 .section-tag {
   display: inline-flex; align-items: center; gap: 8px;
   font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px;
@@ -641,9 +647,10 @@ ul { list-style: none; }
 
 /* Footer */
 .footer {
-  background: var(--bg-alt); border-top: 1px solid var(--border);
+  background: rgba(248, 250, 252, 0.85); border-top: 1px solid var(--border);
   padding: 48px 0 24px;
 }
+[data-theme="dark"] .footer { background: rgba(17, 24, 39, 0.85); }
 .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
 .footer-brand h3 {
   font-family: var(--font-display); font-size: 1.3rem; margin-bottom: 12px;
@@ -748,10 +755,11 @@ ul { list-style: none; }
 }
 /* TECH STACK*/
 .tech-strip {
-  background: var(--bg-alt); padding: 24px 0; overflow: hidden;
+  background: rgba(248, 250, 252, 0.85); padding: 24px 0; overflow: hidden;
   border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
   position: relative;
 }
+[data-theme="dark"] .tech-strip { background: rgba(17, 24, 39, 0.85); }
 .tech-strip::before, .tech-strip::after {
   content: ''; position: absolute; top: 0; bottom: 0; width: 60px; z-index: 2;
   pointer-events: none;
@@ -924,6 +932,7 @@ ul { list-style: none; }
 </style>
 </head>
 <body>
+  <canvas id="bg3d"></canvas>
   <div id="loader"><div class="loader-spinner"></div></div>
   <div id="scrollProgress"></div>
   <div id="pageTransition"></div>
@@ -1037,22 +1046,22 @@ ul { list-style: none; }
             <div class="img-placeholder">  <img src="RON.jfif" alt="About Me"></div>
           </div>
           <div class="about-exp-badge">
-            <span class="number">2</span>
+            <span class="number">2+</span>
             <span class="label">Years</span>
           </div>
         </div>
         <div class="about-text reveal-right">
           <span class="section-tag">About Me</span>
           <h3>Turning Ideas Into Digital Reality</h3>
-          <p>I'm a passionate Graphic Designer and Web Developer with over 1 years of experience creating beautiful, functional digital products. I combine creative design with clean code to deliver exceptional user experiences.</p>
+          <p>I'm a passionate Graphic Designer and Web Developer with over 2 years of experience creating beautiful, functional digital products. I combine creative design with clean code to deliver exceptional user experiences.</p>
           <p>My approach is simple: understand your vision, apply strategic thinking, and execute with precision. Every project I take on receives the same dedication to quality and attention to detail.</p>
           <div class="about-details">
             <div class="about-detail"><i class="fas fa-user"></i><span><strong>Name:</strong> John Ron Avetria</span></div>
-            <div class="about-detail"><i class="fas fa-envelope"></i><span><strong>Email:</strong> johnronavetria@gmail.com</span></div>
+            <div class="about-detail"><i class="fas fa-envelope"></i><span><strong>Email:</strong> johnronavetria@example.com</span></div>
             <div class="about-detail"><i class="fas fa-map-marker-alt"></i><span><strong>Location:</strong> Daet, Camarines Norte, Philippines</span></div>
             <div class="about-detail"><i class="fas fa-clock"></i><span><strong>Availability:</strong> Freelance / Full-time</span></div>
           </div>
-         <a href="Avetria_UpdatedResume (5).pdf" download class="btn btn-primary">
+         <a href="Avetria_ProfessionalCV (2).pdf" download class="btn btn-primary">
     <i class="fas fa-download"></i> Download Resume
 </a>
         </div>
@@ -1182,12 +1191,9 @@ ul { list-style: none; }
         <img src="viber_image_2026-03-31_10-44-57-310.jpg" alt="Social Media ">
     </div>
     </div>
-    <button class="slider-btn prev" id="sliderPrev">&#10094;</button>
-    <button class="slider-btn next" id="sliderNext">&#10095;</button>
     <div class="slider-progress"><div class="slider-progress-bar" id="sliderProgressBar"></div></div>
     <div class="slider-counter" id="sliderCounter">1 / 1</div>
   </div>
-  <div class="slider-dots" id="sliderDots"></div>
   </section>
 
   <section class="section section-alt" id="web-dev">
@@ -1657,9 +1663,6 @@ backToTop.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 
 
 // ===== Design Slider =====
 const sliderTrack = document.getElementById('sliderTrack');
-const sliderPrev = document.getElementById('sliderPrev');
-const sliderNext = document.getElementById('sliderNext');
-const sliderDots = document.getElementById('sliderDots');
 const designFilters = document.getElementById('designFilters');
 const sliderProgressBar = document.getElementById('sliderProgressBar');
 const sliderCounter = document.getElementById('sliderCounter');
@@ -1696,15 +1699,6 @@ function updateSlider() {
     item.classList.toggle('active', item.style.display !== 'none' && i === currentSlide);
   });
 
-  // Dots
-  sliderDots.innerHTML = '';
-  for (let i = 0; i < total; i++) {
-    const dot = document.createElement('button');
-    dot.className = 'slider-dot' + (i === currentSlide ? ' active' : '');
-    dot.addEventListener('click', function() { currentSlide = i; updateSlider(); startAutoSlide(); });
-    sliderDots.appendChild(dot);
-  }
-
   // Counter
   sliderCounter.textContent = (currentSlide + 1) + ' / ' + total;
 }
@@ -1735,24 +1729,6 @@ function stopAutoSlide() {
   sliderProgressBar.style.transition = 'none';
   sliderProgressBar.style.width = '0%';
 }
-
-sliderPrev.addEventListener('click', function() {
-  if (visibleItems.length === 0) return;
-  currentSlide = (currentSlide - 1 + visibleItems.length) % visibleItems.length;
-  updateSlider();
-  startAutoSlide();
-});
-
-sliderNext.addEventListener('click', function() {
-  if (visibleItems.length === 0) return;
-  currentSlide = (currentSlide + 1) % visibleItems.length;
-  updateSlider();
-  startAutoSlide();
-});
-
-sliderDots.addEventListener('click', function() {
-  startAutoSlide();
-});
 
 designFilters.addEventListener('click', function(e) {
   if (e.target.tagName !== 'BUTTON') return;
@@ -1936,6 +1912,80 @@ document.querySelectorAll('.reveal-up').forEach(el => {
 document.querySelectorAll('.project-card, .service-card, .skill-card').forEach(card => {
   card.classList.add('shine');
 });
+</script>
+
+<script>
+// ===== 3D Technology Background =====
+(function() {
+  const canvas = document.getElementById('bg3d');
+  if (!canvas || !window.THREE) return;
+  const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(window.innerWidth, window.innerHeight);
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+  camera.position.z = 60;
+
+  const isMobile = window.innerWidth < 768;
+  const particleCount = isMobile ? 900 : 2000;
+  const positions = new Float32Array(particleCount * 3);
+  const colors = new Float32Array(particleCount * 3);
+  const palette = [new THREE.Color(0x2563EB), new THREE.Color(0x7C3AED), new THREE.Color(0x06B6D4)];
+
+  for (let i = 0; i < particleCount; i++) {
+    positions[i * 3] = (Math.random() - 0.5) * 220;
+    positions[i * 3 + 1] = (Math.random() - 0.5) * 140;
+    positions[i * 3 + 2] = (Math.random() - 0.5) * 220;
+    const c = palette[Math.floor(Math.random() * palette.length)];
+    colors[i * 3] = c.r; colors[i * 3 + 1] = c.g; colors[i * 3 + 2] = c.b;
+  }
+
+  const pointGeo = new THREE.BufferGeometry();
+  pointGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  pointGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+  const pointMat = new THREE.PointsMaterial({
+    size: isMobile ? 0.3 : 0.35,
+    vertexColors: true,
+    transparent: true,
+    opacity: 0.85,
+    depthWrite: false
+  });
+  const points = new THREE.Points(pointGeo, pointMat);
+  scene.add(points);
+
+  const wire1 = new THREE.LineSegments(
+    new THREE.EdgesGeometry(new THREE.IcosahedronGeometry(16, 1)),
+    new THREE.LineBasicMaterial({ color: 0x2563EB, transparent: true, opacity: 0.3 })
+  );
+  wire1.position.set(-42, 12, -20);
+  scene.add(wire1);
+
+  const wire2 = new THREE.LineSegments(
+    new THREE.EdgesGeometry(new THREE.OctahedronGeometry(12, 0)),
+    new THREE.LineBasicMaterial({ color: 0x06B6D4, transparent: true, opacity: 0.22 })
+  );
+  wire2.position.set(46, -14, -10);
+  scene.add(wire2);
+
+  function animate() {
+    requestAnimationFrame(animate);
+    points.rotation.y += 0.0008;
+    points.rotation.x += 0.0003;
+    wire1.rotation.x += 0.002;
+    wire1.rotation.y += 0.003;
+    wire2.rotation.x -= 0.002;
+    wire2.rotation.z += 0.002;
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  window.addEventListener('resize', function() {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
+})();
 </script>
 </body>
 </html>
