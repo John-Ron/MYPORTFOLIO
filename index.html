@@ -3,22 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Professional Graphic Designer & Web Developer - Creating stunning designs and powerful web experiences">
+  <meta name="description" content="John Ron Avetria — Front End Web Developer &amp; Graphic Designer based in Daet, Camarines Norte. Responsive websites, brand identity, and social media design.">
+  <meta name="author" content="John Ron Avetria">
   <meta name="theme-color" content="#2563EB">
-  <title>Portfolio | Graphic Designer & Web Developer</title>
+  <title>John Ron Avetria | Front End Web Developer &amp; Graphic Designer</title>
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="John Ron Avetria | Front End Web Developer &amp; Graphic Designer">
+  <meta property="og:description" content="Front End Web Developer &amp; Graphic Designer crafting responsive websites, brand identities, and scroll-stopping visuals.">
+  <meta property="og:image" content="JOHNRON.jfif">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232563EB'/%3E%3Ctext x='50%25' y='55%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial,Helvetica,sans-serif' font-size='26' font-weight='700' fill='%23fff'%3EJR%3C/text%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="AVETRIAPORTFOLIO.css">
 </head>
 <body>
-  <canvas id="bg3d"></canvas>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <canvas id="bg3d" aria-hidden="true"></canvas>
   <div id="loader">
     <div class="loader-inner">
       <div class="loader-logo">JOHN RON AVETRIA</div>
-      <div class="loader-sub">Graphic Designer &amp; Web Developer</div>
+      <div class="loader-sub">Front End Web Developer &amp; Graphic Designer</div>
       <div class="loader-bar"><span id="loaderBar"></span></div>
       <div class="loader-percent" id="loaderPercent">0%</div>
     </div>
@@ -40,14 +48,14 @@
   <div class="cursor cursor-ring" id="cursorRing"></div>
   <canvas id="cursorLightning" aria-hidden="true"></canvas>
 
-  <div class="lightbox" id="lightbox">
-    <button class="lightbox-close" id="lightboxClose">&times;</button>
-    <img id="lightboxImg" src="" alt="">
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image preview" aria-hidden="true" inert>
+    <button class="lightbox-close" id="lightboxClose" type="button" aria-label="Close image preview">&times;</button>
+    <img id="lightboxImg" alt="" tabindex="-1">
   </div>
 
-  <nav class="navbar" id="navbar">
+  <nav class="navbar" id="navbar" aria-label="Main navigation">
     <div class="container">
-      <a href="#" class="nav-logo">JOHN RON AVETRIA</a>
+      <a href="#hero" class="nav-logo">JOHN RON AVETRIA</a>
       <ul class="nav-links" id="navLinks">
         <li><a href="#hero" class="active">Home</a></li>
         <li><a href="#about">About</a></li>
@@ -57,13 +65,14 @@
         <li><a href="#services">Services</a></li>
         <li><a href="#testimonials">Testimonials</a></li>
         <li><a href="#contact">Contact</a></li>
-        <li><button class="theme-toggle" id="themeToggle" aria-label="Toggle theme"><i class="fas fa-moon"></i></button></li>
+        <li><button type="button" class="theme-toggle" id="themeToggle" aria-label="Switch to dark theme" title="Toggle dark mode"><i class="fas fa-moon" aria-hidden="true"></i></button></li>
       </ul>
-      <button class="theme-toggle mobile-only" id="themeToggleMobile" aria-label="Toggle theme" style="display:none"><i class="fas fa-moon"></i></button>
-      <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+      <button type="button" class="theme-toggle mobile-only" id="themeToggleMobile" aria-label="Switch to dark theme" title="Toggle dark mode" style="display:none"><i class="fas fa-moon" aria-hidden="true"></i></button>
+      <button type="button" class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks"><span></span><span></span><span></span></button>
     </div>
   </nav>
 
+  <main id="main" tabindex="-1">
   <section class="hero" id="hero">
     <div class="hero-bg"></div>
     <div class="hero-grid-bg"></div>
@@ -71,8 +80,8 @@
     <div class="container">
       <div class="hero-content">
         <div class="hero-badge"><span class="dot"></span> Available for freelance work</div>
-        <h1><span class="gradient-text"></span><br><span class="typed-role" id="typedRole"></span></h1>
-        <p>I craft visually stunning designs and build powerful, responsive web experiences that help brands stand out and grow in the digital landscape.</p>
+        <h1><span class="typed-role" id="typedRole">Front-end Web Developer</span></h1>
+        <p>I build responsive, user-friendly, and high-performance websites, create visually engaging designs, and provide accurate, organized data management. I combine creativity and technical skills to help businesses strengthen their online presence, improve efficiency, and grow in the digital landscape.</p>
         <div class="hero-buttons">
           <a href="#graphic-design" class="btn btn-primary magnetic"><i class="fas fa-eye"></i> View Portfolio</a>
           <a href="#contact" class="btn btn-outline magnetic"><i class="fas fa-paper-plane"></i> Hire Me</a>
@@ -81,8 +90,8 @@
       <div class="hero-visual">
         <div class="hero-profile-frame">
           <div class="inner image-reveal" id="heroReveal">
-            <img src="JOHNRON.jfif" class="image image-front" alt="Profile Picture">
-            <img src="Ron (2).jfif" class="image image-back" alt="Profile Picture Alternate">
+            <img src="JOHNRON.jfif" class="image image-front" alt="Portrait of John Ron Avetria">
+            <img src="Ron (2).jfif" class="image image-back" alt="John Ron Avetria at work" loading="lazy" decoding="async">
           </div>
         </div>
         <div class="floating-elements">
@@ -105,7 +114,7 @@
         <div class="tech-item"><i class="fab fa-js"></i> JavaScript</div>
         <div class="tech-item"><i class="fas fa-server"></i> XAMPP</div>
         <div class="tech-item"><i class="fab fa-php"></i> PHP</div>
-        <div class="tech-item"><i class="fab fa-react"></i> REACT</div>
+        <div class="tech-item"><i class="fab fa-react"></i> React</div>
         <div class="tech-item"><i class="fab fa-figma"></i> Figma</div>
         <div class="tech-item"><i class="fab fa-github"></i> GitHub</div>
         <div class="tech-item"><svg class="tech-svg" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><path fill="#217346" fill-rule="evenodd" clip-rule="evenodd" d="M29 6V14L41.9999 14V16L29 16V23L42 23V8C42 6.89543 41.1642 6 40.1333 6H29ZM29 25L42 25V32H29V25ZM29 34H42V40C42 41.1046 41.1642 42 40.1333 42L29 42V34ZM27 34V42L15.8666 42C14.8357 42 14 41.1046 14 40V34H27ZM27 14L14 14V8C14 6.89543 14.8357 6 15.8666 6H27V14ZM23.0525 16V23H27V16H23.0525ZM23.0525 25V32H27V25H23.0525ZM6 17C6 16.4477 6.44772 16 7 16H20.1579C20.7102 16 21.1579 16.4477 21.1579 17V31C21.1579 31.5523 20.7102 32 20.1579 32H7C6.44772 32 6 31.5523 6 31V17ZM9.60654 19H11.867L13.7011 22.754L15.6394 19H17.7511L14.8417 24L17.8174 29H15.5901L13.5912 25.07L11.6007 29H9.34033L12.3653 23.982L9.60654 19Z"/></svg> Microsoft Excel</div>
@@ -121,8 +130,24 @@
     </div>
   </div>
 
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <div class="ticker-group">
+        <span>Front End Web Developer</span><span>Graphic Designer</span><span>UI/UX Design</span><span>Data Management</span><span>Virtual Assistant</span><span>Available for freelance</span>
+      </div>
+      <div class="ticker-group">
+        <span>Front End Web Developer</span><span>Graphic Designer</span><span>UI/UX Design</span><span>Data Management</span><span>Virtual Assistant</span><span>Available for freelance</span>
+      </div>
+    </div>
+  </div>
+
   <section class="section" id="about">
     <div class="container">
+      <div class="about-head">
+        <span class="section-tag reveal">About Me</span>
+        <h2 class="section-title reveal">Turning Ideas Into Digital Reality</h2>
+        <p class="section-subtitle reveal">I'm a Front End Web Developer and Graphic Designer with experience creating beautiful, functional digital products. I combine clean, responsive code with thoughtful visual design to deliver experiences that look great and work even better.</p>
+      </div>
       <div class="about-grid">
         <div class="about-image reveal-left">
           <div class="img-wrap lanyard-wrap" id="lanyardWrap">
@@ -136,22 +161,19 @@
               </div>
               <div class="lanyard-clip" id="lanyardClip" aria-hidden="true"></div>
               <div class="id-card" id="idCard" tabindex="0" role="button"
-                   aria-label="Employee ID card. Click and hold to pull down.">
+                   aria-label="AVETRIA Employee ID card. Click and hold to pull down.">
                 <div class="id-card-top"><span class="id-company">AVETRIA</span></div>
-                <div class="id-card-photo"><img src="RON.jfif" alt="About Me"></div>
+                <div class="id-card-photo"><img src="RON.jfif" alt="John Ron Avetria ID photo" loading="lazy" decoding="async"></div>
               </div>
             </div>
             <div class="lanyard-hint"><i class="fas fa-mouse-pointer"></i> Drag the ID card down</div>
           </div>
         </div>
         <div class="about-text reveal-right">
-          <span class="section-tag">About Me</span>
-          <h3>Turning Ideas Into Digital Reality</h3>
-          <p>I'm a passionate Graphic Designer and Web Developer with experience creating beautiful, functional digital products. I combine creative design with clean code to deliver exceptional user experiences.</p>
           <p>My approach is simple: understand your vision, apply strategic thinking, and execute with precision. Every project I take on receives the same dedication to quality and attention to detail.</p>
           <div class="about-details">
             <div class="about-detail"><i class="fas fa-user"></i><span><strong>Name:</strong> John Ron Avetria</span></div>
-            <div class="about-detail"><i class="fas fa-envelope"></i><span><strong>Email:</strong> johnronavetria@gmail.com</span></div>
+            <div class="about-detail"><i class="fas fa-envelope"></i><span><strong>Email:</strong> <a href="mailto:johnronavetria@gmail.com">johnronavetria@gmail.com</a></span></div>
             <div class="about-detail"><i class="fas fa-map-marker-alt"></i><span><strong>Location:</strong> Daet, Camarines Norte, Philippines</span></div>
             <div class="about-detail"><i class="fas fa-clock"></i><span><strong>Availability:</strong> Freelance / Full-time</span></div>
           </div>
@@ -171,27 +193,27 @@
       <div class="skills-grid reveal-stagger">
         <div class="skill-card">
           <div class="skill-icon"><i class="fas fa-palette"></i></div>
-          <h4>Graphic Design</h4>
+          <h3>Graphic Design</h3>
           <p>Brand identity, social media graphics, posters, and marketing materials that captivate audiences.</p>
         </div>
         <div class="skill-card">
           <div class="skill-icon"><i class="fas fa-pencil-ruler"></i></div>
-          <h4>UI/UX Design</h4>
+          <h3>UI/UX Design</h3>
           <p>User-centered interfaces with seamless experiences, from wireframes to high-fidelity prototypes.</p>
         </div>
         <div class="skill-card">
           <div class="skill-icon"><i class="fas fa-code"></i></div>
-          <h4>Frontend Development</h4>
+          <h3>Frontend Development</h3>
           <p>Responsive, pixel-perfect websites built with modern frameworks and clean, maintainable code.</p>
         </div>
         <div class="skill-card">
           <div class="skill-icon"><i class="fas fa-server"></i></div>
-          <h4>Backend Development</h4>
-          <p>I have a working knowledge of backend development and can handle backend tasks, but I am still developing my expertise in this area.</p>
+          <h3>Backend Development</h3>
+          <p>Working knowledge of PHP and MySQL for server-side tasks, with a steady focus on growing deeper backend expertise.</p>
         </div>
         <div class="skill-card">
           <div class="skill-icon"><i class="fa-solid fa-file-excel"></i></div>
-          <h4>Microsoft Excel (Advanced)</h4>
+          <h3>Microsoft Excel (Advanced)</h3>
           <p>Proficient in using Microsoft Excel for data analysis, reporting, and visualization.</p>
         </div>
       </div>
@@ -250,23 +272,26 @@
       <div class="project-grid">
         <div class="project-card reveal tilt-card">
           <div class="mockup">
-            <div class="mockup-bar"><span></span><span></span><span></span></div>
-            <img src="Screenshot 2026-06-02 103731.png" alt="Client Portfolio Web" style="width:100%;height:100%;object-fit:cover;border-radius:0 0 8px 8px">
+            <div class="mockup-bar" aria-hidden="true"><span></span><span></span><span></span></div>
+            <button type="button" class="mockup-screen"
+                    data-lightbox="Screenshot 2026-06-02 103731.png"
+                    data-lightbox-alt="Client Portfolio Web — homepage screenshot"
+                    aria-label="View Client Portfolio Web screenshot larger">
+              <img src="Screenshot 2026-06-02 103731.png" alt="Client Portfolio Web homepage screenshot" loading="lazy" decoding="async">
+              <span class="mockup-zoom" aria-hidden="true"><i class="fas fa-expand"></i></span>
+            </button>
           </div>
           <div class="project-info">
-            <h4>Client Portfolio Web</h4>
-            <p>I developed a portfolio website for a client, showcasing their work, services, and professional information through a clean and user-friendly design.
-            </p></p>
+            <h3>Client Portfolio Web</h3>
+            <p>I developed a portfolio website for a client, showcasing their work, services, and professional information through a clean and user-friendly design.</p>
             <div class="project-tech"><span>HTML</span><span>CSS</span><span>JavaScript</span></div>
             <div class="project-links">
-              <a href="https://john-ron.github.io/Client_Portfolio/" target="_blank" class="live magnetic">
-                <i class="fas fa-external-link-alt"></i> Live Demo
+              <a href="https://john-ron.github.io/Client_Portfolio/" target="_blank" rel="noopener noreferrer" class="live magnetic">
+                <i class="fas fa-external-link-alt" aria-hidden="true"></i> Live Demo
               </a>
             </div>
           </div>
         </div>
-
-       
       </div>
     </div>
   </section>
@@ -279,32 +304,32 @@
       <div class="services-grid reveal-stagger">
         <div class="service-card">
           <div class="service-icon"><i class="fas fa-paint-brush"></i></div>
-          <h4>Graphic Design</h4>
+          <h3>Graphic Design</h3>
           <p>Logo design, branding, social media graphics, posters, and marketing collateral that make your brand unforgettable.</p>
         </div>
         <div class="service-card">
           <div class="service-icon"><i class="fas fa-code"></i></div>
-          <h4>Web Development</h4>
+          <h3>Web Development</h3>
           <p>Custom websites, web applications, and e-commerce solutions built with modern technologies and best practices.</p>
         </div>
         <div class="service-card">
           <div class="service-icon"><i class="fas fa-pencil-ruler"></i></div>
-          <h4>UI/UX Design</h4>
+          <h3>UI/UX Design</h3>
           <p>User research, wireframing, prototyping, and interface design that deliver intuitive user experiences.</p>
         </div>
         <div class="service-card">
           <div class="service-icon"><i class="fas fa-mobile-alt"></i></div>
-          <h4>Web Design</h4>
+          <h3>Web Design</h3>
           <p>Responsive, mobile-first website designs that look stunning on every device and drive conversions.</p>
         </div>
         <div class="service-card">
           <div class="service-icon"><i class="fas fa-bullhorn"></i></div>
-          <h4>Branding</h4>
+          <h3>Branding</h3>
           <p>Complete brand identity packages including logos, color palettes, typography, and brand guidelines.</p>
         </div>
         <div class="service-card">
           <div class="service-icon"><i class="fas fa-chart-line"></i></div>
-          <h4>Digital Marketing</h4>
+          <h3>Digital Marketing</h3>
           <p>Social media graphics, email templates, and digital ads designed to engage and convert your audience.</p>
         </div>
       </div>
@@ -322,7 +347,7 @@
             <div class="testimonial-card-inner">
               <div class="quote">"</div>
               <div class="testimonial-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-              <p class="testimonial-text">"John Ron created a professional and visually impressive portfolio website that perfectly showcased my work and personal brand. The design was modern, user-friendly, and exceeded my expectations. He was easy to work with, responsive to feedback, and delivered a high-quality result. Highly recommended!"</p>
+              <p class="testimonial-text">John Ron created a professional and visually impressive portfolio website that perfectly showcased my work and personal brand. The design was modern, user-friendly, and exceeded my expectations. He was easy to work with, responsive to feedback, and delivered a high-quality result. Highly recommended!</p>
               <div class="testimonial-author">
                 <div class="testimonial-avatar">JA</div>
                 <div><div class="testimonial-name">Joyce Abando</div><div class="testimonial-role">CPA</div></div>
@@ -333,7 +358,7 @@
             <div class="testimonial-card-inner">
               <div class="quote">"</div>
               <div class="testimonial-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-              <p class="testimonial-text">"John Ron did an amazing job creating our Gender Reveal website. The design was beautiful, interactive, and perfectly captured the excitement of our special moment. He was professional, responsive, and delivered exactly what we envisioned. Highly recommended!"</p>
+              <p class="testimonial-text">John Ron did an amazing job creating our Gender Reveal website. The design was beautiful, interactive, and perfectly captured the excitement of our special moment. He was professional, responsive, and delivered exactly what we envisioned. Highly recommended!</p>
               <div class="testimonial-author">
                 <div class="testimonial-avatar">JT</div>
                 <div><div class="testimonial-name">James Tacalan</div><div class="testimonial-role">Staff, Jollibee</div></div>
@@ -344,10 +369,10 @@
             <div class="testimonial-card-inner">
               <div class="quote">"</div>
               <div class="testimonial-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-              <p class="testimonial-text">"The Design John Ron created for us was world-class. Everything was cohesive and beautifully designed. A true talent in both design and development."</p>
+              <p class="testimonial-text">The design John Ron created for us was world-class. Everything was cohesive and beautifully designed. A true talent in both design and development.</p>
               <div class="testimonial-author">
                 <div class="testimonial-avatar">JD</div>
-                <div><div class="testimonial-name">Jobelle Dadios</div><div class="testimonial-role">HR, Coverge ICT Solution Convera Bussiness Management Services</div></div>
+                <div><div class="testimonial-name">Jobelle Dadios</div><div class="testimonial-role">HR, Converge ICT Solutions &amp; Convera Business Management Services</div></div>
               </div>
             </div>
           </div>
@@ -367,49 +392,54 @@
           <div class="contact-details">
             <div class="contact-item">
               <div class="contact-item-icon"><i class="fas fa-envelope"></i></div>
-              <div class="contact-item-text"><strong>Email</strong><span>johnronavetria@gmail.com</span></div>
+              <div class="contact-item-text"><strong>Email</strong><span><a href="mailto:johnronavetria@gmail.com">johnronavetria@gmail.com</a></span></div>
             </div>
             <div class="contact-item">
               <div class="contact-item-icon"><i class="fas fa-phone-alt"></i></div>
-              <div class="contact-item-text"><strong>Phone</strong><span>09302680347</span></div>
+              <div class="contact-item-text"><strong>Phone</strong><span><a href="tel:+639302680347">0930 268 0347</a></span></div>
             </div>
             <div class="contact-item">
               <div class="contact-item-icon"><i class="fas fa-map-marker-alt"></i></div>
-              <div class="contact-item-text"><strong>Location</strong><span>Daet, Camarines Norte, PHILIPPINES</span></div>
+              <div class="contact-item-text"><strong>Location</strong><span>Daet, Camarines Norte, Philippines</span></div>
             </div>
           </div>
           <div class="contact-socials">
-            <a href="https://www.linkedin.com/in/your-username" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-            <a href="https://www.instagram.com/_https.ron24?igsh=MTlzN3E3cjI1MDVtYg==" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-            <a href="https://github.com/John-Ron" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
-            <a href="https://www.facebook.com/share/1BfKKtAffV/" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-            <a href="http://t.me/h17273728" target="_blank" aria-label="Telegram"><i class="fab fa-telegram-plane"></i></a>
+            <a href="https://www.instagram.com/_https.ron24?igsh=MTlzN3E3cjI1MDVtYg==" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+            <a href="https://github.com/John-Ron" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fab fa-github" aria-hidden="true"></i></a>
+            <a href="https://www.facebook.com/share/1BfKKtAffV/" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+            <a href="https://t.me/h17273728" target="_blank" rel="noopener noreferrer" aria-label="Telegram"><i class="fab fa-telegram-plane" aria-hidden="true"></i></a>
+            <a href="mailto:johnronavetria@gmail.com" aria-label="Email"><i class="fas fa-envelope" aria-hidden="true"></i></a>
           </div>
         </div>
         <div class="contact-form reveal-right">
-          <form id="contactForm">
+          <form id="contactForm" action="https://formsubmit.co/johnronavetria@gmail.com" method="POST">
+            <input type="hidden" name="_subject" id="formSubjectHidden" value="New message from portfolio">
+            <input type="hidden" name="_template" value="table">
             <div class="form-group floating">
-              <input type="text" id="name" placeholder=" " required>
+              <input type="text" id="name" name="name" autocomplete="name" placeholder=" " required>
               <label for="name">Your Name</label>
             </div>
             <div class="form-group floating">
-              <input type="email" id="email" placeholder=" " required>
+              <input type="email" id="email" name="email" autocomplete="email" placeholder=" " required>
               <label for="email">Your Email</label>
             </div>
             <div class="form-group floating">
-              <input type="text" id="subject" placeholder=" ">
+              <input type="text" id="subject" name="subject" placeholder=" ">
               <label for="subject">Subject</label>
             </div>
             <div class="form-group floating">
-              <textarea id="message" placeholder=" " required></textarea>
+              <textarea id="message" name="message" placeholder=" " required></textarea>
               <label for="message">Your Message</label>
             </div>
-            <button type="submit" class="btn btn-primary glow ripple" style="width:100%;justify-content:center"><i class="fas fa-paper-plane"></i> Send Message</button>
+            <button type="submit" class="btn btn-primary glow ripple" style="width:100%;justify-content:center"><i class="fas fa-paper-plane" aria-hidden="true"></i> Send Message</button>
+            <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+            <p class="form-note">Messages go straight to my inbox. Prefer email? Reach me at <a href="mailto:johnronavetria@gmail.com">johnronavetria@gmail.com</a>.</p>
           </form>
         </div>
       </div>
     </div>
   </section>
+  </main>
 
   <footer class="footer">
     <div class="container">
@@ -432,14 +462,15 @@
           <a href="#services">Graphic Design</a>
           <a href="#services">Web Development</a>
           <a href="#services">UI/UX Design</a>
-          <a href="#services">Branding</a>
+          <a href="#services">Promotional Materials</a>
         </div>
         <div class="footer-col">
           <h4>Connect</h4>
-          <a href="#"><i class="fab fa-github"></i> GitHub</a>
-          <a href="#"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
-          <a href="#"><i class="fab fa-facebook-f"></i> Facebook</a>
-          <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+          <a href="https://github.com/John-Ron" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i> GitHub</a>
+          <a href="https://www.facebook.com/share/avetriajohnron/" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f" aria-hidden="true"></i> Facebook</a>
+          <a href="https://www.instagram.com/_https.ron24?igsh=MTlzN3E3cjI1MDVtYg==" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram" aria-hidden="true"></i> Instagram</a>
+          <a href="https://t.me/RonAvetria" target="_blank" rel="noopener noreferrer"><i class="fab fa-telegram-plane" aria-hidden="true"></i> Telegram</a>
+          <a href="mailto:johnronavetria@gmail.com"><i class="fas fa-envelope" aria-hidden="true"></i> Email</a>
         </div>
       </div>
       <div class="footer-bottom">
@@ -449,8 +480,45 @@
     </div>
   </footer>
 
-  <button class="back-to-top" id="backToTop" aria-label="Back to top"><i class="fas fa-arrow-up"></i></button>
+  <div class="chat-widget" id="chatWidget">
+    <div class="chat-panel" id="chatPanel" role="dialog" aria-label="Chat assistant" hidden>
+      <div class="chat-header">
+        <div class="chat-avatar"><img src="JOHNRON.jfif" alt="" loading="lazy"></div>
+        <div class="chat-heading">
+          <strong>John Ron Avetria</strong>
+          <span><i class="fas fa-circle" aria-hidden="true"></i> Available for freelance work</span>
+        </div>
+        <button type="button" class="chat-close" id="chatClose" aria-label="Close chat"><i class="fas fa-times" aria-hidden="true"></i></button>
+      </div>
 
-  <script src="script.js"></script>
+      <div class="chat-messages" id="chatMessages" role="log" aria-label="Conversation" aria-live="polite"></div>
+
+      <div class="chat-quick" id="chatQuick" aria-label="Suggested questions">
+        <button type="button" data-question="Tell me about John">About John</button>
+        <button type="button" data-question="What services do you offer?">Services</button>
+        <button type="button" data-question="What is your work experience?">Experience</button>
+        <button type="button" data-question="Where did you study?">Education</button>
+        <button type="button" data-question="What tools do you use?">Tools</button>
+        <button type="button" data-question="How much do you charge?">Rates</button>
+        <button type="button" data-question="Can I see your projects?">Projects</button>
+        <button type="button" data-question="How can I contact you?">Contact</button>
+      </div>
+
+      <form class="chat-input" id="chatForm">
+        <label class="sr-only" for="chatInput">Type a message</label>
+        <input type="text" id="chatInput" placeholder="Ask me anything..." autocomplete="off">
+        <button type="submit" aria-label="Send message"><i class="fas fa-paper-plane" aria-hidden="true"></i></button>
+      </form>
+    </div>
+
+    <button type="button" class="chat-toggle" id="chatToggle" aria-label="Open chat assistant" aria-expanded="false" aria-controls="chatPanel" title="Chat with John Ron">
+      <i class="fas fa-comment-dots chat-icon-closed" aria-hidden="true"></i>
+      <i class="fas fa-times chat-icon-open" aria-hidden="true"></i>
+    </button>
+  </div>
+
+  <button type="button" class="back-to-top" id="backToTop" aria-label="Back to top"><i class="fas fa-arrow-up" aria-hidden="true"></i></button>
+
+  <script src="AVETRIAPORTFOLIO.js"></script>
 </body>
 </html>
